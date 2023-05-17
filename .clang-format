@@ -1,7 +1,7 @@
 ---
 Language:        Cpp
 # BasedOnStyle:  Mozilla
-AccessModifierOffset: 0
+AccessModifierOffset: -2
 AlignAfterOpenBracket: AlwaysBreak
 AlignArrayOfStructures: Left
 AlignConsecutiveMacros: None
@@ -61,7 +61,7 @@ ColumnLimit:     72
 CommentPragmas:  '^ IWYU pragma:'
 QualifierAlignment: Left
 CompactNamespaces: false
-ConstructorInitializerIndentWidth: 3
+ConstructorInitializerIndentWidth: 2
 ContinuationIndentWidth: 2
 Cpp11BracedListStyle: true
 DeriveLineEnding: false
@@ -104,7 +104,7 @@ IndentGotoLabels: true
 IndentPPDirectives: AfterHash
 IndentExternBlock: AfterExternBlock
 IndentRequires:  false
-IndentWidth:     3
+IndentWidth:     2
 IndentWrappedFunctionNames: false
 InsertTrailingCommas: None
 JavaScriptQuotes: Leave
@@ -131,7 +131,7 @@ PenaltyExcessCharacter: 1000000
 PenaltyReturnTypeOnItsOwnLine: 0
 PenaltyIndentedWhitespace: 0
 PointerAlignment: Left
-PPIndentWidth:   3
+PPIndentWidth:   2
 ReferenceAlignment: Pointer
 ReflowComments:  true
 RemoveBracesLLVM: false
