@@ -12,9 +12,47 @@ set(prank_INSTALL_INCLUDEDIR ${CMAKE_INSTALL_INCLUDEDIR})
 set(prank_INSTALL_CONFDIR ${prank_INSTALL_LIBDIR}/cmake/prank-${PROJECT_VERSION})
 
 list(INSERT CMAKE_MODULE_PATH 0 ${PROJECT_SOURCE_DIR}/cmake)
+
 include(prank_deps)
 
+add_library(prank_compiler_settings INTERFACE)
+set_target_properties(prank_compiler_settings
+  PROPERTIES
+  CXX_STANDARD ${prank_CXX_STANDARD}
+  CXX_STANDARD_REQUIRED TRUE
+  EXPORT_NAME compiler_settings
+)
+add_library(prank::compiler_settings ALIAS prank_compiler_settings)
+
+add_library(prank_header INTERFACE)
+set_target_properties(prank_header PROPERTIES EXPORT_NAME header)
+target_include_directories(prank_header
+  INTERFACE
+  $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+  $<INSTALL_INTERFACE:${prank_INSTALL_INCLUDEDIR}>)
+target_link_libraries(prank_header INTERFACE prank::compiler_settings)
+add_library(prank::header ALIAS prank_header)
+
+
 add_subdirectory(prank)
+
+
+install(TARGETS prank_compiler_settings prank_header prank
+  EXPORT prank_EXPORTS
+  RUNTIME DESTINATION ${prank_INSTALL_BINDIR}
+  LIBRARY DESTINATION ${prank_INSTALL_LIBDIR}
+  ARCHIVE DESTINATION ${prank_INSTALL_LIBDIR}
+)
+
+install(FILES
+  ${PROJECT_BINARY_DIR}/config.hpp
+  DESTINATION ${prank_INSTALL_INCLUDEDIR}/prank)
+
+install(DIRECTORY prank
+  DESTINATION ${prank_INSTALL_INCLUDEDIR}
+  FILES_MATCHING PATTERN "*.hpp")
+
 
 if(prank_BUILD_TESTING)
   include(CTest)
